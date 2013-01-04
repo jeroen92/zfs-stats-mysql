@@ -1,5 +1,5 @@
 CC = gcc
-FILES = main.c mysql.c
+FILES = main.c mysql.c parsing.c
 OUTPUT = -o zfsstats
 
 SQLCONNECTOR = ./mysqlFreeBSD
