@@ -2,7 +2,8 @@ CC = gcc
 FILES = main.c mysql.c parsing.c settings.c
 OUTPUT = -o zfsstats
 
-SQLCONNECTOR = ./mysqlBSD
+BSD_SQLCONNECTOR = ./mysqlBSD
+SUN_SQLCONNECTOR = ./mysqlSolaris
 
 INCLUDES = -I$(SQLCONNECTOR)/include
 LIBS = -lmysqlclient
