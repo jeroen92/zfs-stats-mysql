@@ -6,6 +6,7 @@ SUN_SQLCONNECTOR = ./mysqlSolaris
 OSX_SQLCONNECTOR = ./mysqlOSX
 INCLUDES = -I$(SQLCONNECTOR)/include
 LIBS = -lmysqlclient
+
 uname_S := $(shell sh -c 'uname -s 2>/dev/null || echo not')
 ifeq ($(uname_S),FreeBSD)
 	SQLCONNECTOR = $(BSD_SQLCONNECTOR)
@@ -18,7 +19,8 @@ ifeq ($(uname_S),Darwin)
 endif
 
 prepare:
-	cp -R $(SQLCONNECTOR)/lib/ /usr/lib/
+	mkdir /usr/lib/mysqlconnector/
+	cp -R $(SQLCONNECTOR)/lib/ /usr/lib/mysqlconnector/
 
 all: $(FILES)
 #	$(CC) $(FILES) $(OUTPUT) $(INCLUDES) $(LIBS)
