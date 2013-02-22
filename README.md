@@ -6,14 +6,14 @@ Every 30 minutes it will collect and parse certain ZFS statistics and upload it 
 
 Dependencies:
 
-  -FreeBSD installation with a working /sbin/sysctl
+  -FreeBSD/Solaris installation
 
   -ZFS
 
   -MySQL connector (delivered with this package)
 
-VERSION 1.0
-First stable version released. To install:
+VERSION 1.1
+Added Solaris support. To install:
 
   1. Download the files from the GIT repo to your FreeBSD machine.
 

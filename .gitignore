@@ -17,4 +17,7 @@
 *.app
 
 # Settings
-*.xml
+settings.xml
+
+file
+zfsstats
