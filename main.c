@@ -9,7 +9,7 @@ int main() {
 	printf("Starting daemon...\nKill this process, continue on child...\n");
 	switch(startDaemon()) {
 	case 0:
-		//printf("The daemon was started successfully!\n");
+		printf("The daemon was started successfully!\n");
 		break;
 	case 1:
 		printf("Failed to start the daemon!\n");
@@ -67,9 +67,9 @@ int run() {
 */
 int startDaemon() {
 	// Dont start the daemon when testing, to avoid using the kill command after eacht test
-	/*if (EXEC_ENVIRONMENT == OSX) {
+	if (EXEC_ENVIRONMENT == OSX) {
 		return 99;
-	}*/
+	}
 	// Clone to a child process
 	pid_t pid = fork();
 	

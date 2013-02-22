@@ -99,7 +99,7 @@
 #define HAVE_MLOCK 1
 #define HAVE_MLOCKALL 1
 #define HAVE_MMAP 1
-/* #undef HAVE_MMAP64 */
+#define HAVE_MMAP64 1
 #define HAVE_PERROR 1
 #define HAVE_POLL 1
 #define HAVE_PREAD 1
@@ -167,7 +167,7 @@
 # define HAVE_CHAR 1
 #endif
 
-#define SIZEOF_CHARP 8
+#define SIZEOF_CHARP 4
 #if SIZEOF_CHARP
 # define HAVE_CHARP 1
 #endif
@@ -182,7 +182,7 @@
 # define HAVE_INT 1
 #endif
 
-#define SIZEOF_LONG 8
+#define SIZEOF_LONG 4
 #if SIZEOF_LONG
 # define HAVE_LONG 1
 #endif
@@ -192,7 +192,7 @@
 # define HAVE_LONG_LONG 1
 #endif
 
-#define SIZEOF_OFF_T 8
+#define SIZEOF_OFF_T 4
 #if SIZEOF_OFF_T
 # define HAVE_OFF_T 1
 #endif
@@ -202,7 +202,7 @@
 # define HAVE_SIGSET_T 1
 #endif
 
-#define SIZEOF_SIZE_T 8
+#define SIZEOF_SIZE_T 4
 #if SIZEOF_SIZE_T
 # define HAVE_SIZE_T 1
 #endif
@@ -217,7 +217,7 @@
 # define HAVE_UINT 1
 #endif
 
-#define SIZEOF_ULONG 8
+#define SIZEOF_ULONG 4
 #if SIZEOF_ULONG
 # define HAVE_ULONG 1
 #endif

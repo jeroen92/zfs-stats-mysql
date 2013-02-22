@@ -31,7 +31,6 @@ int initializeSettings() {
 	printf("Operating system:\t");
 	fgets(environmentInput, sizeof environmentInput, stdin);
 	trimWhiteSpace(environmentInput);
-	printf("%s", environmentInput);
 	if (strcmp(environmentInput, "OSX") == 0) EXEC_ENVIRONMENT = OSX;
 	else if (strcmp(environmentInput, "BSD") == 0) EXEC_ENVIRONMENT = BSD;
 	else if (strcmp(environmentInput, "SOL") == 0) EXEC_ENVIRONMENT = SOL;
@@ -49,12 +48,14 @@ int initializeSettings() {
 		// No settings.xml available. create one
 		printf("No config file found, creating one...\n");
 		if ((settingsFile = fopen(SETTINGSFILENAME, "a")) != NULL) {
-			if (promptUser() == 0) {
+			/*if (promptUser() == 0) {
 				createSettingsFile(SETTINGSFILENAME);
 			}
 			else {
 				return 1;
-			}
+			}*/
+			promptUser();
+			createSettingsFile(SETTINGSFILENAME);
 		} else {
 			// Creating settings.xml failed
 			printf("Failed to create settings file\n");
@@ -86,8 +87,9 @@ int initializeSettings() {
  * 	host, user, password and name.
  * 	Puts the received text in configData.dbhost.
  */
-int promptUser() {
-	printf("Database host:\t");
+void promptUser() {
+	printf("\nDatabase host:\t");
+	fpurge(stdin);
 	fgets(configData.dbhost->value, sizeof configData.dbhost->value, stdin);
 	trimWhiteSpace(configData.dbhost->value);
 
@@ -102,7 +104,7 @@ int promptUser() {
 	printf("\nSchema name:\t");
 	fgets(configData.dbschema->value, sizeof configData.dbschema->value, stdin);
 	trimWhiteSpace(configData.dbschema->value);
-	return 0;
+	return;
 }
 
 /*

@@ -60,6 +60,6 @@ void parseSysctlStatisticsFile(FILE*);
 void parseKstatStatisticsFile(FILE*);
 int createSettingsFile(const char[]);
 void fillConfig(char[], char[]);
-int promptUser();
+void promptUser();
 int checkIfTableExists(char*);
 int createDatabaseTables();
