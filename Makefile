@@ -1,7 +1,7 @@
 CC = gcc
 FILES = main.c mysql.c parsing.c settings.c
 OUTPUT = -o zfsstats
-BSD_SQLCONNECTOR = ./mysqlBSD
+BSD_SQLCONNECTOR = ./mysqlFreeBSD
 SUN_SQLCONNECTOR = ./mysqlSolaris
 OSX_SQLCONNECTOR = ./mysqlOSX
 INCLUDES = -I$(SQLCONNECTOR)/include
@@ -19,9 +19,7 @@ ifeq ($(uname_S),Darwin)
 endif
 
 prepare:
-	mkdir /usr/lib/mysqlconnector/
-	cp -R $(SQLCONNECTOR)/lib/ /usr/lib/mysqlconnector/
+	cp -R $(SQLCONNECTOR)/lib/* /usr/lib/
 
 all: $(FILES)
-#	$(CC) $(FILES) $(OUTPUT) $(INCLUDES) $(LIBS)
-	$(CC) $(FILES) $(OUTPUT) -L$(SQLCONNECTOR)/lib/ $(LIBS)
+	$(CC) $(FILES) $(OUTPUT) $(INCLUDES) $(LIBS)
