@@ -21,4 +21,5 @@ prepare:
 	cp -R $(SQLCONNECTOR)/lib/ /usr/lib/
 
 all: $(FILES)
-	$(CC) $(FILES) $(OUTPUT) $(INCLUDES) $(LIBS)
+#	$(CC) $(FILES) $(OUTPUT) $(INCLUDES) $(LIBS)
+	$(CC) $(FILES) $(OUTPUT) -L$(SQLCONNECTOR)/lib/ $(LIBS)
