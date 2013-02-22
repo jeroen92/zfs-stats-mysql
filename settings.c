@@ -1,6 +1,7 @@
 #include "main.h"
 
 // Initializing variables declared as extern in main.h
+ENVIRONMENT EXEC_ENVIRONMENT = OSX;
 CONFIGPAIR dbconfig[4] = {
 		{"dbhost"}, {"dbuser"}, {"dbpasswd"}, {"dbschema"}};
 CONFIGDATA configData = {&dbconfig[0], &dbconfig[1], &dbconfig[2], &dbconfig[3]};
@@ -23,6 +24,22 @@ DATA COLLECTION[COLUMNS] = {
  */
 int initializeSettings() {
 	FILE* settingsFile;
+	
+	// Retrieve the OS environment
+	char environmentInput[4];
+	printf("Please enter your OS environment. The supported options are BSD and SOL, meaning FreeBSD and Solaris\n");
+	printf("Operating system:\t");
+	fgets(environmentInput, sizeof environmentInput, stdin);
+	trimWhiteSpace(environmentInput);
+	printf("%s", environmentInput);
+	if (strcmp(environmentInput, "OSX") == 0) EXEC_ENVIRONMENT = OSX;
+	else if (strcmp(environmentInput, "BSD") == 0) EXEC_ENVIRONMENT = BSD;
+	else if (strcmp(environmentInput, "SOL") == 0) EXEC_ENVIRONMENT = SOL;
+	else {
+		printf("Incorrect value. Only BSD and SOL are valid. Exiting...\n");
+		return 1;
+	}
+	
 	// Try to open config file. If exists, load configuration
 	if (settingsFile = fopen(SETTINGSFILENAME, "r")) {
 		// Settings.xml exists. parsing...
@@ -32,8 +49,12 @@ int initializeSettings() {
 		// No settings.xml available. create one
 		printf("No config file found, creating one...\n");
 		if ((settingsFile = fopen(SETTINGSFILENAME, "a")) != NULL) {
-			promptUser();
-			createSettingsFile(SETTINGSFILENAME);
+			if (promptUser() == 0) {
+				createSettingsFile(SETTINGSFILENAME);
+			}
+			else {
+				return 1;
+			}
 		} else {
 			// Creating settings.xml failed
 			printf("Failed to create settings file\n");
@@ -61,11 +82,11 @@ int initializeSettings() {
 }
 
 /*
- * 	Prompts user to enter the database's:
+ * 	Prompts user to enter the OS and the database's:
  * 	host, user, password and name.
  * 	Puts the received text in configData.dbhost.
  */
-void promptUser() {
+int promptUser() {
 	printf("Database host:\t");
 	fgets(configData.dbhost->value, sizeof configData.dbhost->value, stdin);
 	trimWhiteSpace(configData.dbhost->value);
@@ -81,7 +102,7 @@ void promptUser() {
 	printf("\nSchema name:\t");
 	fgets(configData.dbschema->value, sizeof configData.dbschema->value, stdin);
 	trimWhiteSpace(configData.dbschema->value);
-	return;
+	return 0;
 }
 
 /*

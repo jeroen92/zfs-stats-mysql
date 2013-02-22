@@ -5,7 +5,7 @@
 #include <unistd.h>
 
 #define MAX_WORDSIZE 50
-#define SLEEPCYCLE 1800
+#define SLEEPCYCLE 2
 #define COLUMNS 7
 
 // Defining structs
@@ -30,13 +30,16 @@ typedef struct configData {
 
 // Type definitions
 typedef enum { true, false } BOOLEAN;
-typedef enum {OSX, BSD} ENVIRONMENT;
+typedef enum {OSX, BSD, SOL} ENVIRONMENT;
 typedef struct data DATA;
 typedef DATA *DATAPTR;
 
 // Global constants
-static const ENVIRONMENT EXEC_ENVIRONMENT = BSD;
+//static const ENVIRONMENT EXEC_ENVIRONMENT = BSD; // Old
 static const char* SETTINGSFILENAME = "settings.xml";
+
+// Global definitions
+extern ENVIRONMENT EXEC_ENVIRONMENT;
 
 // Global non-constant array
 extern DATA COLLECTION[COLUMNS];
@@ -53,9 +56,10 @@ void addCharToWord(char, char[]);
 void fillStruct(char[], char[]);
 char* trimWhiteSpace(char*);
 void parseSettingsFile(FILE*);
-void parseStatisticsFile(FILE*);
+void parseSysctlStatisticsFile(FILE*);
+void parseKstatStatisticsFile(FILE*);
 int createSettingsFile(const char[]);
 void fillConfig(char[], char[]);
-void promptUser();
+int promptUser();
 int checkIfTableExists(char*);
 int createDatabaseTables();

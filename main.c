@@ -5,8 +5,8 @@ int main() {
 	if (initializeSettings() != 0) return 1;
 	// Begin daemon, no more user interaction from now on!
 
-	// Try to start the daemon. If env = OSX, case will be 99. To escape this, change EXEC_ENVIRONMENT in main.h to BSD.
-	printf("Starting daemon...\nKill this process, continue on child...");
+	// Try to start the daemon. If env = OSX, case will be 99. To escape this, change EXEC_ENVIRONMENT in main.h to BSD or SOL.
+	printf("Starting daemon...\nKill this process, continue on child...\n");
 	switch(startDaemon()) {
 	case 0:
 		//printf("The daemon was started successfully!\n");
@@ -41,15 +41,20 @@ int run() {
 				printf("niet gelukt!");
 				return 1;
 			}
+			parseKstatStatisticsFile(output);
 			break;
 		case BSD:
 			if(!(output = popen("/sbin/sysctl -q 'kstat.zfs.misc.arcstats'", "r"))) return 1;
+			parseSysctlStatisticsFile(output);
+			break;
+		case SOL:
+			if(!(output = popen("/bin/kstat -m zfs -n arcstats -p'", "r"))) return 1;
+			parseKstatStatisticsFile(output);
 			break;
 		default:
 			printf("No environment selected!\n");
 			return 1;
 	}
-	parseStatisticsFile(output);
 	char queryString[1024];
 	snprintf(queryString, 1024, "INSERT INTO l2arc_stats (date, %s, %s, %s, %s, %s, %s, %s) VALUES (NOW(), '%ld', '%ld', '%ld', '%ld', '%ld', '%ld', '%ld')", COLLECTION[0].columnName, COLLECTION[1].columnName, COLLECTION[2].columnName, COLLECTION[3].columnName, COLLECTION[4].columnName, COLLECTION[5].columnName, COLLECTION[6].columnName, COLLECTION[0].value, COLLECTION[1].value, COLLECTION[2].value, COLLECTION[3].value, COLLECTION[4].value, COLLECTION[5].value, COLLECTION[6].value);
 	if (!(executeQuery(queryString))) return 1;
@@ -62,9 +67,9 @@ int run() {
 */
 int startDaemon() {
 	// Dont start the daemon when testing, to avoid using the kill command after eacht test
-	if (EXEC_ENVIRONMENT == OSX) {
+	/*if (EXEC_ENVIRONMENT == OSX) {
 		return 99;
-	}
+	}*/
 	// Clone to a child process
 	pid_t pid = fork();
 	

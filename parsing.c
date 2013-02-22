@@ -25,6 +25,8 @@ char* trimWhiteSpace(char *inputString)	{
 }
 
 /*
+ *	For BSD systems only.
+ *
  *	Function that parses every line of the file provided with
  *	the FILE* parameter. The output will be parsed as a key->value
  *	pair, and then is send to fillStruct().
@@ -39,7 +41,7 @@ char* trimWhiteSpace(char *inputString)	{
  *	char* key = mfu_hits
  *	char* value = 3328512701
  */
-void parseStatisticsFile(FILE* statsFile) {
+void parseSysctlStatisticsFile(FILE* statsFile) {
 	char c, key[MAX_WORDSIZE], value[MAX_WORDSIZE];
 	int valueReached = 0;
 	DATA result;
@@ -49,6 +51,45 @@ void parseStatisticsFile(FILE* statsFile) {
 		while((c = getc(statsFile)) != '\n' && c != EOF) {
 			if (c == '.') key[0] = '\0';
 			else if (c == ':') valueReached = 1;
+			else if ((c >= '0' && c <= '9') && (valueReached == 1)) addCharToWord(c, value);
+			else if ((c >= 'a' && c <= 'z') || (c == '_') || (c >= '0' && c <= '9')) addCharToWord(c, key);
+		}
+		//printf("%s -> %s\n", key, value);
+		fillStruct(key, value);
+		key[0] = '\0';
+		value[0] = '\0';
+		valueReached = 0;
+	}
+	fclose(statsFile);
+}
+
+/*	
+ *	For Solaris systems only.
+ *
+ *	Function that parses every line of the file provided with
+ *	the FILE* parameter. The output will be parsed as a key->value
+ *	pair, and then is send to fillStruct().
+ *	When it encounters a dot, the word variable is erased. Only the word
+ *	after the last dot will be rememberd, and saved as the key. After the
+ *	colon, the value part of the line is reached.
+ *
+ *	On this way, the line:
+ *	zfs:0:arcstats:prefetch_data_hits       1406046
+ *
+ *	Will be parsed into:
+ *	char* key = prefetch_data_hits
+ *	char* value = 1406046
+ */
+void parseKstatStatisticsFile(FILE* statsFile) {
+	char c, key[MAX_WORDSIZE], value[MAX_WORDSIZE];
+	int valueReached = 0;
+	DATA result;
+
+	// Iterate trough 'file'
+	while(c != EOF) {
+		while((c = getc(statsFile)) != '\n' && c != EOF) {
+			if (c == ':') key[0] = '\0';
+			else if (c == '\t') valueReached = 1;
 			else if ((c >= '0' && c <= '9') && (valueReached == 1)) addCharToWord(c, value);
 			else if ((c >= 'a' && c <= 'z') || (c == '_') || (c >= '0' && c <= '9')) addCharToWord(c, key);
 		}
