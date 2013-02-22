@@ -7,8 +7,11 @@ SQLCONNECTOR = ./mysqlBSD
 INCLUDES = -I$(SQLCONNECTOR)/include
 LIBS = -lmysqlclient
 
-prepare:
-	cp -R $(SQLCONNECTOR)/lib/ /usr/lib/
+prepare bsd:
+	cp -R $(BSD_SQLCONNECTOR)/lib/ /usr/lib/
+
+prepare sun:
+	cp -R $(SUN_SQLCONNECTOR)/lib/ /usr/lib/
 
 all: $(FILES)
 	$(CC) $(FILES) $(OUTPUT) $(INCLUDES) $(LIBS)
