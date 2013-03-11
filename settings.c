@@ -88,8 +88,11 @@ int initializeSettings() {
  * 	Puts the received text in configData.dbhost.
  */
 void promptUser() {
+	// Flush the stdin input buffer
+	int temp;
+	while ((temp = getchar()) != '\n' && temp != EOF);
+	
 	printf("\nDatabase host:\t");
-	fpurge(stdin);
 	fgets(configData.dbhost->value, sizeof configData.dbhost->value, stdin);
 	trimWhiteSpace(configData.dbhost->value);
 
