@@ -1,11 +1,10 @@
 #include "zpoolstats.h"
 
 int collectZpoolStats() {
-	char* poolname = "rpool";
 	libzfs_handle_t *g_zfs = libzfs_init();
 
 	zpool_handle_t *zhp;
-	zhp = zpool_open_canfail(g_zfs, poolname);
+	zhp = zpool_open_canfail(g_zfs, configData.poolname->value);
 	
 	nvlist_t *configuration, *vdevroot;
 	vdev_stat_t *vdevstats;

@@ -3,7 +3,7 @@
 MYSQL *conn;
 MYSQL_RES *res;
 MYSQL_ROW row;
-extern CONFIGPAIR dbconfig[4];
+extern CONFIGPAIR dbconfig[5];
 
 /*	Try to initiate a mysql connection with the global variables defined in main.h */
 int initiateMySQL() {

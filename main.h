@@ -26,6 +26,7 @@ typedef struct configData {
 	CONFIGPAIRPTR dbuser;
 	CONFIGPAIRPTR dbpasswd;
 	CONFIGPAIRPTR dbschema;
+	CONFIGPAIRPTR poolname;
 } CONFIGDATA, *CONFIGDATAPTR;
 
 // Type definitions
@@ -45,7 +46,7 @@ extern ENVIRONMENT EXEC_ENVIRONMENT;
 extern DATA COLLECTION[COLUMNS];
 
 // Global structs
-extern CONFIGPAIR dbconfig[4];
+extern CONFIGPAIR dbconfig[5];
 
 // Variable to directly access a configpair by name, eg. configData.dbhost->..
 extern CONFIGDATA configData;

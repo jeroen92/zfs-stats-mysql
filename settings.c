@@ -2,9 +2,9 @@
 
 // Initializing variables declared as extern in main.h
 ENVIRONMENT EXEC_ENVIRONMENT = OSX;
-CONFIGPAIR dbconfig[4] = {
-		{"dbhost"}, {"dbuser"}, {"dbpasswd"}, {"dbschema"}};
-CONFIGDATA configData = {&dbconfig[0], &dbconfig[1], &dbconfig[2], &dbconfig[3]};
+CONFIGPAIR dbconfig[5] = {
+		{"dbhost"}, {"dbuser"}, {"dbpasswd"}, {"dbschema"}, {"poolname"}};
+CONFIGDATA configData = {&dbconfig[0], &dbconfig[1], &dbconfig[2], &dbconfig[3], &dbconfig[4]};
 DATA COLLECTION[COLUMNS] = {
 		{"l2_io_error", 0},
 		{"l2_cksum_bad", 0},
@@ -107,6 +107,10 @@ void promptUser() {
 	printf("\nSchema name:\t");
 	fgets(configData.dbschema->value, sizeof configData.dbschema->value, stdin);
 	trimWhiteSpace(configData.dbschema->value);
+
+	printf("\nZFS Pool name:\t");
+        fgets(configData.poolname->value, sizeof configData.poolname->value, stdin);
+        trimWhiteSpace(configData.poolname->value);
 	return;
 }
 

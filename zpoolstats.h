@@ -2,6 +2,8 @@
 #include <sys/fs/zfs.h>
 #include <libzfs.h>
 
+#include "main.h"
+
 typedef struct iostatcollection {
 	uint64_t	readops;
 	uint64_t	writeops;
