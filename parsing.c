@@ -120,12 +120,15 @@ void parseKstatStatisticsFile(FILE* statsFile) {
  */
 void parseSettingsFile(FILE* configFile) {
 	char c, key[30], value[30];
+	strncpy(value, "", sizeof(value));
+	strncpy(key, "", sizeof(key));
 	int keyReached, valueReached = 0;
 		while ((c = getc(configFile)) != EOF) {
 			// Start of a key node
 			if (c == '<') {
 				// Encountered a second level <node>
 				if (keyReached == 1) {
+					//strncpy(key, "", sizeof(key));
 					keyReached = 2;
 				}
 				// Probably encountered the ending of a second level node
@@ -153,10 +156,14 @@ void parseSettingsFile(FILE* configFile) {
 			else if (c == '>') {
 				// The end of the end key node is reached. Go one level back
 				if (keyReached == 3) {
+					c = NULL;
+					//strncpy(key, "", sizeof(key));
 					keyReached = 1;
 				}
 				// The end of the first key node is reached.  Now it's the values turn
 				else if (keyReached == 2 && valueReached != 1) {
+					c = NULL;
+					//strncpy(key, "", sizeof(key));
 					keyReached = 3;
 					valueReached = 1;
 				}
