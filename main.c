@@ -57,14 +57,15 @@ int run() {
 	}
 	char queryString[1024];
 	snprintf(queryString, 1024, "INSERT INTO l2arc_stats (date, %s, %s, %s, %s, %s, %s, %s) VALUES (NOW(), '%ld', '%ld', '%ld', '%ld', '%ld', '%ld', '%ld')", COLLECTION[0].columnName, COLLECTION[1].columnName, COLLECTION[2].columnName, COLLECTION[3].columnName, COLLECTION[4].columnName, COLLECTION[5].columnName, COLLECTION[6].columnName, COLLECTION[0].value, COLLECTION[1].value, COLLECTION[2].value, COLLECTION[3].value, COLLECTION[4].value, COLLECTION[5].value, COLLECTION[6].value);
-	if (!(executeQuery(queryString))) return 1;
+	if (executeQuery(queryString) != 0) return 1;
+	if (collectZpoolStats() != 0) exit(1);
 	return 0;
 }
 
 /*
  *	Create a daemon, creates child and terminates parent.
  *	User interaction won't be possible after execution. (stdin/stdout etc)
-*/
+ */
 int startDaemon() {
 	// Dont start the daemon when testing, to avoid using the kill command after eacht test
 	if (EXEC_ENVIRONMENT == OSX) {
