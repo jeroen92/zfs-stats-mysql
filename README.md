@@ -12,8 +12,9 @@ Dependencies:
 
   -MySQL connector (delivered with this package)
 
-VERSION 1.1
-Added Solaris support. To install:
+VERSION 1.2
+Added zpool IO statistics. For the full set of changes, please read the commit history.
+ To install:
 
   1. Download the files from the GIT repo to your FreeBSD machine.
 
@@ -21,6 +22,6 @@ Added Solaris support. To install:
  
   3. Give the user sufficient rights on the created schema (INSERT, CREATE TABLE, SHOW)
   
-  4. Copy the MySQL C API with 'make prepare'. If these are already installed, compile with 'make build'.
+  4. Copy the MySQL C API with 'make prepare'. If these are already installed, compile with 'make all'.
   
   5. Run the ./zfsstats executable and follow the steps on your screen.
