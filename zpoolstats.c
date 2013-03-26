@@ -43,7 +43,7 @@ int collectZpoolStats() {
 	
 	// Create the query and post it to MySQL
 	char queryString[1024];
-	snprintf(queryString, 1024, "INSERT INTO io_stats (date, %s, %s, %s, %s) VALUES (NOW(), '%llu', '%llu', '%llu', '%llu')", "iop_read", "iop_write", "bandwidth_read", "bandwidth_write", "space", "space_alloc", "checksum_errors", "state", statisticscollection.readops, statisticscollection.writeops, statisticscollection.readbytes, statisticscollection.writebytes, statisticscollection.space, statisticscollection.space_alloc, statisticscollection.checksum_errors, statisticscollection.state);
+	snprintf(queryString, 1024, "INSERT INTO io_stats (date, %s, %s, %s, %s, %s, %s, %s, %s) VALUES (NOW(), '%llu', '%llu', '%llu', '%llu', '%llu', '%llu', '%llu', '%llu')", "iop_read", "iop_write", "bandwidth_read", "bandwidth_write", "space", "space_alloc", "checksum_errors", "state", statisticscollection.readops, statisticscollection.writeops, statisticscollection.readbytes, statisticscollection.writebytes, statisticscollection.space, statisticscollection.space_alloc, statisticscollection.checksum_errors, statisticscollection.state);
 	if (executeQuery(queryString)) return 1;
 	return 0;
 }
