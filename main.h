@@ -29,13 +29,6 @@ typedef struct configData {
 	CONFIGPAIRPTR poolname;
 } CONFIGDATA, *CONFIGDATAPTR;
 
-typedef struct iostatcollection {
-        uint64_t        readops;
-        uint64_t        writeops;
-        uint64_t        readbytes;
-        uint64_t        writebytes;
-} iostatcollection;
-
 // Type definitions
 typedef enum { true, false } BOOLEAN;
 typedef enum {OSX, BSD, SOL} ENVIRONMENT;
@@ -54,7 +47,6 @@ extern DATA COLLECTION[COLUMNS];
 
 // Global structs
 extern CONFIGPAIR dbconfig[5];
-extern iostatcollection statisticscollection;
 
 // Variable to directly access a configpair by name, eg. configData.dbhost->..
 extern CONFIGDATA configData;

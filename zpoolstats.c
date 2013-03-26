@@ -35,10 +35,15 @@ int collectZpoolStats() {
 	statisticscollection.writeops = vdevstats->vs_ops[ZIO_TYPE_WRITE];
 	statisticscollection.readbytes = vdevstats->vs_bytes[ZIO_TYPE_READ];
 	statisticscollection.writebytes = vdevstats->vs_bytes[ZIO_TYPE_WRITE];
+	statisticscollection.checksum_errors = vdevstats->vs_checksum_errors;
+	statisticscollection.state = vdevstats->vs_state;
+	statisticscollection.space_alloc = vdevstats->vs_alloc;
+	statisticscollection.space = vdevstats->vs_space;
+
 	
 	// Create the query and post it to MySQL
 	char queryString[1024];
-	snprintf(queryString, 1024, "INSERT INTO io_stats (date, %s, %s, %s, %s) VALUES (NOW(), '%llu', '%llu', '%llu', '%llu')", "iop_read", "iop_write", "bandwidth_read", "bandwidth_write", statisticscollection.readops, statisticscollection.writeops, statisticscollection.readbytes, statisticscollection.writebytes);
+	snprintf(queryString, 1024, "INSERT INTO io_stats (date, %s, %s, %s, %s) VALUES (NOW(), '%llu', '%llu', '%llu', '%llu')", "iop_read", "iop_write", "bandwidth_read", "bandwidth_write", "space", "space_alloc", "checksum_errors", "state", statisticscollection.readops, statisticscollection.writeops, statisticscollection.readbytes, statisticscollection.writebytes, statisticscollection.space, statisticscollection.space_alloc, statisticscollection.checksum_errors, statisticscollection.state);
 	if (executeQuery(queryString)) return 1;
 	return 0;
 }

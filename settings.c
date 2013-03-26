@@ -147,7 +147,7 @@ int createDatabaseTables() {
 	char* queryString = "CREATE TABLE `l2arc_stats` (`date` datetime NOT NULL,`l2_hits` double DEFAULT NULL,`l2_misses` double DEFAULT NULL,`l2_cksum_bad` double DEFAULT NULL,`l2_io_error` double DEFAULT NULL,`l2_size` double DEFAULT NULL,`l2_hdr_size` double DEFAULT NULL,`l2_write_buffer_bytes_scanned` double DEFAULT NULL,PRIMARY KEY (`date`)) ENGINE=InnoDB DEFAULT CHARSET=latin1";
 	if(executeQuery(queryString) != 0)
 		return 1;
-	queryString = "CREATE TABLE `io_stats` (`date` datetime NOT NULL,`iop_read` BIGINT DEFAULT NULL,`iop_write` BIGINT DEFAULT NULL,`bandwidth_read` BIGINT DEFAULT NULL,`bandwidth_write` BIGINT DEFAULT NULL, PRIMARY KEY (`date`)) ENGINE=InnoDB DEFAULT CHARSET=latin1";
+	queryString = "CREATE TABLE `io_stats` (`date` datetime NOT NULL,`iop_read` BIGINT DEFAULT NULL,`iop_write` BIGINT DEFAULT NULL,`bandwidth_read` BIGINT DEFAULT NULL,`bandwidth_write` BIGINT DEFAULT NULL,`space` BIGINT DEFAULT NULL,`space_alloc` BIGINT DEFAULT NULL,`checksum_errors` BIGINT DEFAULT NULL,`state` BIGINT DEFAULT NULL, PRIMARY KEY (`date`)) ENGINE=InnoDB DEFAULT CHARSET=latin1";
 	if(executeQuery(queryString) != 0)
 		return 1;
 	return 0;
