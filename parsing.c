@@ -60,7 +60,7 @@ void parseSysctlStatisticsFile(FILE* statsFile) {
 		value[0] = '\0';
 		valueReached = 0;
 	}
-	fclose(statsFile);
+	pclose(statsFile);
 }
 
 /*	
@@ -99,7 +99,7 @@ void parseKstatStatisticsFile(FILE* statsFile) {
 		value[0] = '\0';
 		valueReached = 0;
 	}
-	fclose(statsFile);
+	pclose(statsFile);
 }
 
 /*
