@@ -64,7 +64,7 @@ int initializeSettings() {
 	}
 
 	// Testing the filled in values
-	if(!initiateMySQL()) {
+	if(!testMySQL()) {
 		printf("Database entries are correct.\n");
 		printf("Verifying existence of tables...\n");
 		if (checkIfTableExists("l2arc_stats") == 0) {

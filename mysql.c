@@ -17,6 +17,15 @@ int initiateMySQL() {
 	return 0;
 }
 
+/* Test the connection to the mysql database */
+int testMySQL() {
+	if (initiateMySQL() == 0) {
+		mysql_close(conn);
+		return 0;
+	}
+	return 1;
+}
+
 /*	Executes the provided char array as a query. Returns 1 on failure */
 int executeQuery(char* query) {
 	initiateMySQL();

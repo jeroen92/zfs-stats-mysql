@@ -22,6 +22,7 @@ typedef struct iostatcollection {
  *	Variable declarations
  */
 iostatcollection statisticscollection;
+
 /*
  *	Function prototypes
  */

@@ -22,6 +22,7 @@ int collectZpoolStats() {
 	configuration = zpool_get_config(zhp, NULL);
 
 	// Now we have the config, we can release the handle to the zpool
+	libzfs_fini(g_zfs);
 	free(zhp);
 
 	// Put the vdev tree belonging to the pool in newconfig in newnvroot.
